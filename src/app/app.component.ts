@@ -11,31 +11,51 @@ import { PersonService, Person } from './person.service';
 export class AppComponent {
   people: Person[] = [];
   private predicate: string = 'first';
+  private reverse: boolean = false; 
    
   constructor(private personService: PersonService) {}
 
   ngOnInit() { }
 
 
-  toggleSortOrder(newPredicate: string = 'first') {
-    this.predicate = newPredicate;
-    this.people.sort((itemOne, itemTwo) => {
-      var column = this.predicate;
-      return (itemOne[column] < itemTwo[column]) ? -1 :
-        (itemOne[column] > itemTwo[column]) ? 1 : 0;
-    });
+   toggleSortOrder(column: string, newSearch = false) {
+    if (column === this.predicate && !newSearch) {
+      // User clicked on the same column that's already being used to sort.
+      // Reverse the sort.
+      this.people.reverse();
+      this.reverse = !this.reverse;
+    } else {
+      this.predicate = column;
+      this.reverse = false;
+      this.people.sort((itemOne, itemTwo) =>
+        (itemOne[column] < itemTwo[column]) ? -1 :
+          (itemOne[column] > itemTwo[column]) ? 1 : 0
+      );
+    }
   }
-
 
   checkSearch(term: string) {
     if (term.length < 2) {
       this.people = [];
     } else {
-      this.personService.getPeople(term) // Assuming the personService returns a Promise 
-        .then((people) => {              // We would follow up with a then()
-          this.people = people;          // <-- Assumes the Promise resolves to an array
+      this.personService.getPeople(term)
+        .then((people) => {    
+          people.forEach((person) => {
+            person.birthDate = new Date(person.birthDate); 
+          })
+          this.people = people;
         })
     }
+  }
+
+  arrow(column: string) {
+    if (!this.reverse && (this.predicate === column)) {
+      return '▲';
+    }
+    if (this.reverse && (this.predicate === column)) {
+      return '▼';
+    }
+    return '';
   }
 
 }

@@ -9,7 +9,7 @@ export class Person {
   gender: string;
   ssn: string;
   salary: string;
-  birthDate: string;
+  birthDate: any;
 }
 
 @Injectable()
@@ -22,6 +22,11 @@ export class PersonService {
     return this.http.get(this.server + '/people/' + term)
       .map(function (res) { return res.json(); })
       .map((res) => res.people)
+      .map((people) => {
+        people.forEach((person) => 
+          {person.birthDate = new Date(person.birthDate); })
+        return people;
+      })
       .toPromise()
   }
 }

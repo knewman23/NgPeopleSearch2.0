@@ -8,15 +8,24 @@ import { PersonService, Person } from './person.service';
   templateUrl: './app.component.html'
 })
 
-
 export class AppComponent {
   people: Person[] = [];
+  private predicate: string = 'first';
    
-  constructor(private personService: PersonService) {
+  constructor(private personService: PersonService) {}
+
+  ngOnInit() { }
+
+
+  toggleSortOrder(newPredicate: string = 'first') {
+    this.predicate = newPredicate;
+    this.people.sort((itemOne, itemTwo) => {
+      var column = this.predicate;
+      return (itemOne[column] < itemTwo[column]) ? -1 :
+        (itemOne[column] > itemTwo[column]) ? 1 : 0;
+    });
   }
 
-  ngOnInit() {
-  }
 
   checkSearch(term: string) {
     if (term.length < 2) {

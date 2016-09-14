@@ -26,11 +26,11 @@
         <table class="table" *ngIf="people.length > 0">
           <thead>
           <tr>
-            <th>Name</th>
-            <th>SSN</th>
-            <th>Birth Date</th>
-            <th>Gender</th>
-          </tr>
+              <th><a (click)="toggleSortOrder('last')">Name</a></th>
+              <th><a (click)="toggleSortOrder('ssn')">SSN</a></th>
+              <th><a (click)="toggleSortOrder('birthDate')">Birth Date</a></th>
+              <th><a (click)="toggleSortOrder('gender')">Gender</a></th>
+            </tr>
           </thead>
 
           <tbody>

@@ -1,3 +1,51 @@
-<h1>
-  {{title}}
-</h1>
+<div id="search">
+  <div class="row">
+    <div class="col-md-6">
+      <form id="search-form">
+        <span class="glyphicon glyphicon-search"></span>
+        <input type="text" size="50" class="form-control" id="search-input"
+               #searchBox
+               placeholder="Enter the first part of a last name">
+        <button (click)="checkSearch(searchBox.value)" class="btn btn-default">Search</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="search-results">
+    <div class="row">
+      <div class="col-md-6">
+        <div *ngIf="people.length === 0">No search results.</div>
+        <div *ngIf="people.length > 0">
+          {{ people.length }} matching people
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <table class="table" *ngIf="people.length > 0">
+          <thead>
+          <tr>
+            <th>Name</th>
+            <th>SSN</th>
+            <th>Birth Date</th>
+            <th>Gender</th>
+          </tr>
+          </thead>
+
+          <tbody>
+          <tr id="template-row"
+              *ngFor="let person of people">
+            <td class="name">
+                {{person.first}} {{person.last}}
+            </td>
+            <td class="SSN">{{person.ssn}}</td>
+            <td class="DOB">{{person.birthDate}}</td>
+            <td class="gender">{{person.gender | gender}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div> <!-- search -->

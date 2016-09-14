@@ -2,9 +2,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-
+import { PersonService } from './person.service';
 import { AppComponent } from './app.component';
 import { GenderPipe } from './gender.pipe';
+
 
 @NgModule({
   declarations: [
@@ -16,7 +17,7 @@ import { GenderPipe } from './gender.pipe';
     FormsModule,
     HttpModule
   ],
-  providers: [],
+  providers: [PersonService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

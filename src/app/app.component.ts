@@ -1,28 +1,32 @@
 import { Component } from '@angular/core';
-import {HTTP_PROVIDERS, Http} from '@angular/http';
 import 'rxjs/Rx'; // For methods for Observables
+import { PersonService, Person } from './person.service';
+
 
 @Component({
-  providers: [HTTP_PROVIDERS],
   selector: 'my-app',
   templateUrl: './app.component.html'
 })
-export class AppComponent {
-  server = 'https://angular-krysnewman.c9users.io:8081';
-  people = [];
 
-  constructor(private http: Http) {
+
+export class AppComponent {
+  people: Person[] = [];
+   
+  constructor(private personService: PersonService) {
   }
 
-  checkSearch(term) {
+  ngOnInit() {
+  }
+
+  checkSearch(term: string) {
     if (term.length < 2) {
       this.people = [];
     } else {
-      this.http.get(this.server + '/people/' + term)
-        .map((res) => res.json())
-        .subscribe((response) => {
-          this.people = response.people;
-        });
+      this.personService.getPeople(term) // Assuming the personService returns a Promise 
+        .then((people) => {              // We would follow up with a then()
+          this.people = people;          // <-- Assumes the Promise resolves to an array
+        })
     }
   }
+
 }

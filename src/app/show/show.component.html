@@ -1,0 +1,28 @@
+<div *ngIf="person">
+  <div class="row">
+    <div class="col-sm-4">
+      <table class="table table-bordered table-hover">
+        <tr>
+          <th>Name</th>
+          <td>{{person.first}} {{person.last}}</td>
+        </tr>
+        <tr>
+          <th>Gender</th>
+          <td>{{person.gender | gender}}</td>
+        </tr>
+        <tr>
+          <th>SSN</th>
+          <td>{{person.ssn}}</td>
+        </tr>
+        <tr>
+          <th>Birth Date</th>
+          <td>{{person.birthDate | date:'MMM d, yyyy'}}</td>
+        </tr>
+      </table>
+      <div>
+        <a [routerLink]="['/edit', person.id]" role="button" class="btn btn-default">Edit</a>
+        <a [routerLink]="['/']" role="button" class="btn btn-default">Back</a>
+      </div>
+    </div>
+  </div>
+</div>

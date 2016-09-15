@@ -41,13 +41,15 @@
           </thead>
 
           <tbody>
-          <tr id="template-row"
-              *ngFor="let person of people">
+         <tr id="template-row"
+              *ngFor="let person of people; let i = index">
             <td class="name">
+              <a [routerLink]="['/show', person.id]">
                 {{person.first}} {{person.last}}
+              </a>
             </td>
             <td class="SSN">{{person.ssn}}</td>
-            <td class="DOB">{{person.birthDate | date: 'medium'}}</td>
+            <td class="DOB">{{person.birthDate | date:"EEE MMM d, y" }}</td>
             <td class="gender">{{person.gender | gender}}</td>
           </tr>
           </tbody>

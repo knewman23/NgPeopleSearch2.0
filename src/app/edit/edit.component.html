@@ -1,0 +1,61 @@
+<div *ngIf="person">
+  <div class="row">
+    <div class="col-sm-4">
+      <form role="form" [formGroup]="editForm"
+            (ngSubmit)="savePerson()">
+
+        <!-- Bootstrap-compliant form -->
+        <div class="form-group"
+             [class.has-error]="!editForm.controls['first'].valid && (editForm.controls['first'].touched || editForm.controls['first'].dirty)">
+          <!-- start-excerpt first-name -->
+          <label for="first">First name</label>
+          <input type="text" name="first" id="first" class="form-control" placeholder="First name"
+                 [formControl]="editForm.controls['first']"
+                 [(ngModel)]="person.first"/>
+          <!--end-excerpt first-name -->
+        </div>
+
+        <div class="form-group"
+             [class.has-error]="!editForm.controls['last'].valid && editForm.controls['last'].touched">
+          <label for="last">Last name</label>
+          <input type="text"  name="last" id="last" class="form-control" placeholder="Last name"
+                 [formControl]="editForm.controls['last']"
+                 [(ngModel)]="person.last"/>
+        </div>
+
+        <div class="form-group"
+             [class.has-error]="!editForm.controls['ssn'].valid && (editForm.controls['ssn'].touched || editForm.controls['ssn'].dirty)">
+
+          <label for="ssn">SSN</label>
+          <input type="text" name="ssn" class="form-control" placeholder="SSN" id="ssn"
+                 [formControl]="editForm.controls['ssn']"
+                 [(ngModel)]="person.ssn"
+                 pattern="^\d{3}-\d{2}-\d{4}$"/>
+        </div>
+
+        <div class="form-group">
+          <label for="birthDate">Birth Date</label>
+          <input id="birthDate" type="date" class="form-control" ngControl="birthDate" name="birthDate"
+                 [formControl]="editForm.controls['birthDate']"
+                 [(ngModel)]="person.birthDate">
+        </div>
+
+        <div class="form-group">
+          <label for="gender">Gender</label>
+          <select class="form-control" ngControl="gender" id="gender" name="gender"
+                  [(ngModel)]="person.gender"
+                  [formControl]="editForm.controls['gender']" >
+            <option *ngFor="let g of genders" [value]="g.short">{{g.long}}</option>
+          </select>
+        </div>
+        <div>
+
+          <button class="btn btn-primary" type="submit" [disabled]="!editForm.valid">Save
+          </button>
+          <button type="button" class="btn btn-default" [routerLink]="['/']">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
